@@ -1,11 +1,11 @@
 #include "Inventory.hpp"
-
+#include "Item.hpp"
 #include <stdexcept>
 #include <utility>
 
 namespace {
     bool isEmpty(const Item& item) {
-        return item.getType() == NONE;
+        return item.type_ == NONE;
     }
 }
 
@@ -14,7 +14,7 @@ Inventory::Inventory(const std::vector<std::vector<Item>>& items, Item* equipped
     for (const auto& row : inventory_grid_) {
         for (const auto& item : row) {
             if (!isEmpty(item)) {
-                weight_ += item.getWeight();
+                weight_ += item.weight_;
                 ++item_count_;
             }
         }
@@ -67,7 +67,7 @@ bool Inventory::store(const size_t& row, const size_t& col, const Item& pickup) 
     inventory_grid_[row][col] = pickup;
 
     if (!isEmpty(pickup)) {
-        weight_ += pickup.getWeight();
+        weight_ += pickup.weight_;
         ++item_count_;
     }
     return true;
